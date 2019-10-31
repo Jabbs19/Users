@@ -1,0 +1,26 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: users-db
+  labels:
+    type: db
+    service: users
+    db: mongodb
+spec:
+  selector:
+    matchLabels:
+      type: db
+      service: users
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        type: db
+        service: users
+        db: mongodb
+    spec:
+      containers:
+      - name: db
+        image: aheadaviation/mongo3
+        imagePullPolicy: IfNotPresent
